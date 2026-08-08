@@ -1,0 +1,8 @@
+
+@import "tailwindcss";
+
+h1{
+  font-size: 28px;
+  margin: 0 0 30px;
+  text-align: center;
+}
