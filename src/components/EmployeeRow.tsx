@@ -1,11 +1,24 @@
+import { useNavigate } from 'react-router-dom';
+import { useGlobalEmployee } from '../context/EmployeeContext';
 import type { Employee as EmployeeModel } from '../data/models/employee.types';
 
 interface EmployeeRowProps{
-    employee: Omit<EmployeeModel, "isActive">
+    employee: EmployeeModel;
 }
 
 const EmployeeRow = ({employee}:EmployeeRowProps) => {
-  const {id, name, gender, email, mobile, address, department, skills, role, salary} = employee;
+
+  const {handleDeleteEmployee, handleGetEmployee} = useGlobalEmployee();
+  
+  const {id, name, gender, email, mobile, address, department, skills, role, salary, isActive} = employee;
+  
+  const navigate = useNavigate();
+  
+  const handleEditEmployee = (emp:EmployeeModel) => {
+      handleGetEmployee(emp);
+      navigate("/edit-employee");
+  }
+  
   return (
     <tr>
         <td className='border p-2'>{id}</td>
@@ -18,10 +31,10 @@ const EmployeeRow = ({employee}:EmployeeRowProps) => {
         <td className='border p-2'>{skills.join(", ")}</td>
         <td className='border p-2'>{salary}</td>
         <td className='border p-2'>{role}</td>
-        <td className='border p-2'></td>
+        <td className='border p-2'>{isActive ? "Yes": "No"}</td>
         <td className='border p-2'>
-            <button className='border p-2 rounded cursor-pointer mr-2'>Update</button>
-            <button className='border p-2 rounded cursor-pointer'>Delete</button>
+            <button onClick={() => handleEditEmployee(employee)} className='border p-2 rounded cursor-pointer mr-2'>Update</button>
+            <button onClick={() => handleDeleteEmployee(id)} className='border p-2 rounded cursor-pointer'>Delete</button>
         </td>
     </tr>
   )

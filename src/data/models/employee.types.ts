@@ -1,14 +1,18 @@
 
+type Gender = "Male" | "Female" | "Others";
+type Role = "Admin" | "Employee";
+type Department = "IT" | "HR" | "Finance";
+
 export interface Employee{
-    id: number,
-    name: string,
-    gender: string,
-    email: string,
-    mobile: string,
-    address: string,
-    department: string,
-    skills: string[],
-    salary: number,
-    role: string,
-    isActive: boolean
+    id: number | number;
+    name: string;
+    gender: Gender;
+    email: string;
+    mobile: string;
+    address: string;
+    department: Department;
+    skills: string[];
+    salary: number;
+    role: Role;
+    isActive: boolean;
 }
