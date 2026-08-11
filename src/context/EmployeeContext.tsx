@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useEffect } from "react";
+import { createContext, useContext, useReducer, useEffect, useCallback } from "react";
 import type { Employee as EmployeeModel} from "../data/models/employee.types";
 
 // import employeesMockData from "../data/mock/employees";
@@ -34,8 +34,9 @@ type AddAction = {type:  "ADD"; payload: EmployeeModel}
 type GetUpdateId = {type:  "GET_UPDATE_ID"; payload: EmployeeModel} 
 type UpdateAction = {type:  "UPDATE"; payload: EmployeeUpdateState} 
 type DeleteAction = {type:  "DELETE"; payload: string | number} 
+type ClearUpdateAction = {type: "CLEAR_UPDATE_ID"}
 
-type EmployeeAction = AddAction | GetUpdateId | UpdateAction | DeleteAction
+type EmployeeAction = AddAction | GetUpdateId | UpdateAction | DeleteAction | ClearUpdateAction
 
 const employeeReducer = (state:EmployeeReducerState, action:EmployeeAction):EmployeeReducerState => {
     switch(action.type){
@@ -52,6 +53,7 @@ const employeeReducer = (state:EmployeeReducerState, action:EmployeeAction):Empl
                             employee.id === action.payload.id ? action.payload.employee: employee),
                     updateEmployeeData: null
         }
+        case "CLEAR_UPDATE_ID": return state.updateEmployeeData === null ? state : {...state, updateEmployeeData: null}
         case "DELETE": return {
                 ...state,
                 employeesData: state.employeesData.filter((employee) => employee.id !== action.payload)
@@ -66,6 +68,7 @@ interface EmployeeContextType{
     handleGetEmployee:(employee: EmployeeModel) => void;
     handleUpdateEmployee: (employee: EmployeeModel, id: string | number) => void;
     handleDeleteEmployee: (id: number | string) => void;
+    handleClearUpdateId: () => void
 }
 
 const EmployeeContext = createContext<EmployeeContextType | null>(null);
@@ -107,8 +110,14 @@ const EmployeeProvider = ({children}:{children: React.ReactNode}) => {
         })
     }
 
+    const handleClearUpdateId = useCallback(() => {
+        dispatch({
+            type: "CLEAR_UPDATE_ID"
+        })
+    },[])
+
     return <EmployeeContext.Provider value={{
-        employees, handleGetEmployee, handleAddEmployee, handleUpdateEmployee, handleDeleteEmployee
+        employees, handleGetEmployee, handleAddEmployee, handleUpdateEmployee, handleDeleteEmployee, handleClearUpdateId
     }}> {children}</EmployeeContext.Provider>
 }
 

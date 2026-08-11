@@ -1,6 +1,19 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
+import { useGlobalEmployee } from './context/EmployeeContext'
+import { useEffect } from 'react';
 
 const AppLayout = () => {
+  
+  const {handleClearUpdateId} = useGlobalEmployee();
+  const location = useLocation();
+
+  // Clear Update Employee Data on Unmount or when navigating away from edit-employee route
+  useEffect(() => {
+    if(!location.pathname.startsWith("/edit-employee")){
+        handleClearUpdateId();
+    }
+  },[location.pathname, handleClearUpdateId])
+  
   return (
     <div className='flex flex-col min-h-screen'>
         

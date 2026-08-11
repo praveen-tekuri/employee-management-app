@@ -8,10 +8,10 @@ function App() {
   return (
     <div>
         <Routes>
-          <Route path='/' element={<AppLayout/>}>
-              <Route path='/' element={<AddEmployee/>}/>
-              <Route path='/edit-employee' element={<AddEmployee/>}/>
-              <Route path='/employees' element={<Employees/>}/>
+          <Route path='/'  element={<AppLayout/>}>
+              <Route index element={<AddEmployee/>}/>
+              <Route path='edit-employee' element={<AddEmployee/>}/>
+              <Route path='employees' element={<Employees/>}/>
           </Route>
         </Routes>
     </div>

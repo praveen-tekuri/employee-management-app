@@ -1,7 +1,7 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
 import type { Employee as EmployeeModel } from "../data/models/employee.types"
 import { useGlobalEmployee } from "../context/EmployeeContext"
-import { useNavigate } from "react-router-dom"
+import {useNavigate } from "react-router-dom"
 
 type AddEmployeeForm = Omit<EmployeeModel, "id" | "isActive">
 
@@ -21,7 +21,7 @@ const AddEmployee = () => {
   
   const [formData, setFormData] = useState<AddEmployeeForm>(formFields)
   
-  const {employees:{updateEmployeeData}, handleAddEmployee, handleUpdateEmployee} = useGlobalEmployee();
+  const {employees:{updateEmployeeData}, handleAddEmployee, handleUpdateEmployee, handleClearUpdateId} = useGlobalEmployee();
   
   const navigate = useNavigate();
   
@@ -43,6 +43,7 @@ const AddEmployee = () => {
     e.preventDefault();
     if(updateEmployeeData){
         handleUpdateEmployee({...updateEmployeeData, ...formData}, updateEmployeeData.id)
+        handleClearUpdateId();
     }
     else{
         handleAddEmployee({...formData, id: Date.now(), isActive: true})
@@ -53,8 +54,11 @@ const AddEmployee = () => {
   useEffect(() => {
         if(updateEmployeeData){
             setFormData(updateEmployeeData);
+        }else{
+            setFormData(formFields);
+            handleClearUpdateId();
         }
-  }, [updateEmployeeData])
+  }, [updateEmployeeData, handleClearUpdateId])
 
   return (
     <div>
