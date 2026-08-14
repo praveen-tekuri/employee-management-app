@@ -5,6 +5,7 @@ import { useGlobalEmployee } from '../context/EmployeeContext'
 const Employees = () => {
 
   const [term, setTerm] = useState("");
+  const [sortBy, setSortBy] = useState("");
 
   const {employees: {employeesData}} = useGlobalEmployee();
 
@@ -12,13 +13,37 @@ const Employees = () => {
     [emp.name, emp.gender, emp.role, emp.skills.join(" ")].join(" ").toLowerCase().includes(term.toLowerCase())
   )
 
+  const sortAndFilteredEmployees = [...filteredEmployees].sort((a, b) => {
+    if(sortBy === "name-asc"){
+        return a.name.localeCompare(b.name)
+    }else if(sortBy === "name-desc"){
+        return b.name.localeCompare(a.name);
+    }else if(sortBy === "salary-asc"){
+        return a.salary - b.salary;
+    }else if(sortBy === "salary-desc"){
+        return b.salary - a.salary;
+    }
+    return 0;
+  })
+
   if(employeesData.length < 1) return <h1>No Employees Found</h1>
   
   return (
     <div>
         <h1>Employees</h1>
-        <div className="my-5">
-            <input value={term} onChange={(e) => setTerm(e.target.value)} type="text" className='border rounded p-2 w-full' placeholder='Search Employee...' />
+        <div className="my-5 grid grid-cols-2 gap-6">
+            <div className="filter-employees">
+                <input value={term} onChange={(e) => setTerm(e.target.value)} type="text" className='border rounded p-2 w-full' placeholder='Search Employee...' />
+            </div>
+            <div className="sort">
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} name="sortBy" id="sortBy" className='border rounded p-2 w-full'>
+                    <option value="">Sort By</option>
+                    <option value="name-asc">Name (A - Z)</option>
+                    <option value="name-desc">Name (Z - A)</option>
+                    <option value="salary-asc">Salary (Low to High)</option>
+                    <option value="salary-desc">Salary (High to Low)</option>
+                </select>
+            </div>
         </div>
         <table className='w-full'>
             <thead>
@@ -38,7 +63,7 @@ const Employees = () => {
                 </tr>
             </thead>
             <tbody>
-                {filteredEmployees.map((employee) => (
+                {sortAndFilteredEmployees.map((employee) => (
                     <EmployeeRow key={employee.id} employee={employee}/>
                 ))}
             </tbody>
