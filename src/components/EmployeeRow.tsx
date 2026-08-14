@@ -18,7 +18,12 @@ const EmployeeRow = ({employee}:EmployeeRowProps) => {
       handleGetEmployee(emp);
       navigate("/edit-employee");
   }
-  
+  const handleSoftDelete = (employeeId: number | string) => {
+        const isConfirmed = window.confirm("Are you sure to delete this record?");
+        if(isConfirmed){
+            handleDeleteEmployee(employeeId)
+        }
+  }
   return (
     <tr>
         <td className='border p-2'>{id}</td>
@@ -33,8 +38,12 @@ const EmployeeRow = ({employee}:EmployeeRowProps) => {
         <td className='border p-2'>{role}</td>
         <td className='border p-2'>{isActive ? "Yes": "No"}</td>
         <td className='border p-2'>
-            <button onClick={() => handleEditEmployee(employee)} className='border p-2 rounded cursor-pointer mr-2'>Update</button>
-            <button onClick={() => handleDeleteEmployee(id)} className='border p-2 rounded cursor-pointer'>Delete</button>
+            {isActive ? (
+                <>
+                    <button onClick={() => handleEditEmployee(employee)} className='border p-2 rounded cursor-pointer mr-2'>Update</button>
+                    <button onClick={() => handleSoftDelete(id)} className='border p-2 rounded cursor-pointer'>Delete</button>
+                </>
+            ) : "Deleted"}
         </td>
     </tr>
   )

@@ -56,7 +56,12 @@ const employeeReducer = (state:EmployeeReducerState, action:EmployeeAction):Empl
         case "CLEAR_UPDATE_ID": return state.updateEmployeeData === null ? state : {...state, updateEmployeeData: null}
         case "DELETE": return {
                 ...state,
-                employeesData: state.employeesData.filter((employee) => employee.id !== action.payload)
+                employeesData: state.employeesData.map((employee) => {
+                    if(employee.id === action.payload){
+                        return {...employee, isActive: false}
+                    }
+                    return employee;
+                })
         }
         default : return state;
     }
