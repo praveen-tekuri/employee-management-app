@@ -4,7 +4,7 @@ type Role = "Admin" | "Employee";
 type Department = "IT" | "HR" | "Finance";
 
 export interface Employee{
-    id: number | number;
+    id: number | string;
     name: string;
     gender: Gender;
     email: string;

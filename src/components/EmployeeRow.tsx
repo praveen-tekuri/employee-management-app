@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useGlobalEmployee } from '../context/EmployeeContext';
 import type { Employee as EmployeeModel } from '../data/models/employee.types';
+import { useGlobalAuthContext } from '../context/AuthContext';
 
 interface EmployeeRowProps{
     employee: EmployeeModel;
@@ -8,11 +9,15 @@ interface EmployeeRowProps{
 
 const EmployeeRow = ({employee}:EmployeeRowProps) => {
 
+  const navigate = useNavigate();
+  
   const {handleDeleteEmployee, handleGetEmployee} = useGlobalEmployee();
+  const {user} = useGlobalAuthContext();
+
+  if(!user) return <h1>No user logged in</h1>;
   
   const {id, name, gender, email, mobile, address, department, skills, role, salary, isActive} = employee;
   
-  const navigate = useNavigate();
   
   const handleEditEmployee = (emp:EmployeeModel) => {
       handleGetEmployee(emp);
@@ -39,8 +44,9 @@ const EmployeeRow = ({employee}:EmployeeRowProps) => {
         <td className='border p-2'>{isActive ? "Yes": "No"}</td>
         <td className='border p-2'>
             {isActive ? (
-                <>
-                    <button onClick={() => handleEditEmployee(employee)} className='border p-2 rounded cursor-pointer mr-2'>Update</button>
+                <>  
+
+                    <button onClick={() => handleEditEmployee(employee)} className={`${user?.role === "Admin" && "hidden"} border p-2 rounded cursor-pointer mr-2`}>Update</button>
                     <button onClick={() => handleSoftDelete(id)} className='border p-2 rounded cursor-pointer'>Delete</button>
                 </>
             ) : "Deleted"}

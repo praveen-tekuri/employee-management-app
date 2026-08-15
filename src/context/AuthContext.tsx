@@ -1,14 +1,9 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-
-interface User{
-    email: string,
-    password: string,
-    role: "Admin" | "Employee"
-}
+import type { Employee } from "../data/models/employee.types";
 
 interface AuthContextType{
-    user: User | null,
-    handleLogin: (username: string, password: string) => User | null;
+    user: Employee | null,
+    handleLogin: (username: string, password: string) => Employee | null;
     handleLogout: () => void;
 }
 
@@ -16,17 +11,17 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 
 const AuthProvider = ({children}:{children:ReactNode}) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<Employee | null>(null);
 
     useEffect(() => {
         const isLoggedInUserExist = localStorage.getItem("LoggedInUser");
-        const storedUser: User = isLoggedInUserExist ? JSON.parse(isLoggedInUserExist): null;
+        const storedUser: Employee = isLoggedInUserExist ? JSON.parse(isLoggedInUserExist): null;
         if(storedUser) setUser(storedUser);
     },[])
 
-    const handleLogin = (username: string, password: string): User | null => {
+    const handleLogin = (username: string, password: string): Employee | null => {
         const isEmployeesExist = localStorage.getItem("employees");
-        const employees: User[] = isEmployeesExist ? JSON.parse(isEmployeesExist): []
+        const employees: Employee[] = isEmployeesExist ? JSON.parse(isEmployeesExist): []
         const foundUser = employees.find((emp) => emp.email === username && `${emp.email.slice(0, 4)}@123` === password);
         if(foundUser){
             localStorage.setItem("LoggedInUser", JSON.stringify(foundUser));

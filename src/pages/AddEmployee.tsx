@@ -22,7 +22,6 @@ const AddEmployee = () => {
   const [formData, setFormData] = useState<AddEmployeeForm>(formFields)
   
   const {employees:{updateEmployeeData}, handleAddEmployee, handleUpdateEmployee, handleClearUpdateId} = useGlobalEmployee();
-  
   const navigate = useNavigate();
   
   const handleChange = (e:ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -49,7 +48,7 @@ const AddEmployee = () => {
         handleAddEmployee({...formData, id: Date.now(), isActive: true})
     }
     setFormData(formFields)
-    navigate("/employees");
+    navigate("/");
   }
   useEffect(() => {
         if(updateEmployeeData){
