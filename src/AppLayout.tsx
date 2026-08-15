@@ -24,6 +24,7 @@ const AppLayout = () => {
             </div>
             <ul className='flex gap-6'>
                 <li><Link to="/employees">Employees</Link></li>
+                <li><Link to="/statistics">Employee Statistics</Link></li>
             </ul>
         </nav>
         
