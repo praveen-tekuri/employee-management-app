@@ -4,24 +4,32 @@ import AppLayout from './AppLayout'
 import AddEmployee from './pages/AddEmployee'
 import Employees from './pages/Employees'
 import Statistics from './pages/Statistics'
-import ProtectedRoute, { type User } from './ProtectedRoute'
+import ProtectedRoute from './ProtectedRoute'
 import Home from './pages/Home'
+import Login from './pages/Login'
+import Profile from './pages/Profile'
 
 function App() {
-  const user:User = {id: 101, name: "praveen", role: "admin"};
   return (
     <div>
         <Routes>
           <Route path='/'  element={<AppLayout/>}>
               <Route index element={<Home/>}/>
-              <Route element ={<ProtectedRoute user={user} allowedRoutes={["employee"]} />}>
+              <Route path='login' element={<Login/>}/>
+
+              <Route element ={<ProtectedRoute allowedRoutes={["Employee"]} />}>
                 <Route path='edit-employee' element={<AddEmployee/>}/>
+                <Route path='profile' element={<Profile/>}/>
               </Route>
-              <Route element={<ProtectedRoute user={user} allowedRoutes={['admin']}/>}>
+              
+              <Route element={<ProtectedRoute allowedRoutes={['Admin']}/>}>
                 <Route path='add-employee' element={<AddEmployee/>}/>
                 <Route path='employees' element={<Employees/>}/>
                 <Route path='statistics' element={<Statistics/>}/>
               </Route>
+              
+              <Route path='unauthorized' element={<h1>Not Authorized</h1>}/>
+              <Route path='*' element={<h1>Page Not Found</h1>}/>
           </Route>
         </Routes>
     </div>

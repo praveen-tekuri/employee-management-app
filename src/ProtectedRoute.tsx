@@ -1,28 +1,21 @@
 import { Navigate, Outlet } from "react-router-dom"
+import { useGlobalAuthContext } from "./context/AuthContext";
 
 // Authentication & Authorization
 
-type UserRole = "admin" | "employee";
-
-export interface User{
-    id: number | string,
-    name: string,
-    role: UserRole
-}
-
 interface ProtectedRouteProps{
-    user: User | null | undefined;
-    allowedRoutes?: string[]
+    allowedRoutes?: ("Admin" | "Employee")[];
 }
 
-const ProtectedRoute = ({user, allowedRoutes}:ProtectedRouteProps) => {
+const ProtectedRoute = ({allowedRoutes}:ProtectedRouteProps) => {
     // Check if user loggedIn, if not redirect to Login or specified page
-    if(!user) return <Navigate to="/" replace/>
+    const {user} = useGlobalAuthContext();
+    if(!user) return <Navigate to="/login" replace/>
 
     // Check if route requires specific role, if not redirect to unauthorized fallback page or message
-    if(allowedRoutes && !allowedRoutes.includes(user.role)) return "Not Authorized"
+    if(allowedRoutes && !allowedRoutes.includes(user.role)) return <Navigate to ="/unauthorized" replace/>
     
-    // Render children if all checks pass
+    // Render nested routes if all checks pass
     return <Outlet/>
 }
 
