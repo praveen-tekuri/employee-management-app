@@ -18,9 +18,12 @@ const Statistics = () => {
         departments,
         totalEmployees,
         averageSalary,
+        groupByDepartment,
+        totalSalaryByDepartment,
+        highestSalaryByDepartment
         } = calculateEmployeeStatistics(employeesData);
 
-   const formattedAverageSalary = new Intl.NumberFormat("en-In", {style: 'currency', currency: 'INR'}).format(averageSalary);
+   const formatCurrency = (value: number) => new Intl.NumberFormat("en-In", {style: 'currency', currency: 'INR'}).format(value);
   
   return (
     <div>
@@ -32,19 +35,19 @@ const Statistics = () => {
             </div>
             <div className='card p-4 rounded border text-center'>
                 <p className='mb-2'>Highest Salary</p>
-                <p>{highestSalary}</p>
+                <p>{formatCurrency(highestSalary)}</p>
             </div>
             <div className='card p-4 rounded border text-center'>
                 <p className='mb-2'>Lowest Salary</p>
-                <p>{lowestSalary}</p>
+                <p>{formatCurrency(lowestSalary)}</p>
             </div>
             <div className='card p-4 rounded border text-center'>
                 <p className='mb-2'>Total Salary Paid</p>
-                <p>{totalSalaryPaid}</p>
+                <p>{formatCurrency(totalSalaryPaid)}</p>
             </div>
             <div className='card p-4 rounded border text-center'>
                 <p className='mb-2'>Average Salary</p>
-                <p>{formattedAverageSalary}</p>
+                <p>{formatCurrency(averageSalary)}</p>
             </div>
             <div className='card p-4 rounded border text-center'>
                 <p className='mb-2'>Active Employees</p>
@@ -63,7 +66,8 @@ const Statistics = () => {
         {showCharts ? (
             <div className="grid grid-cols-2 gap-6 mt-10">
                 <CustomBarChart data = {departments} xKey="department" yKey="count"/>
-                <CustomBarChart data = {employeesData} xKey="name" yKey="salary"/>
+                <CustomBarChart data = {totalSalaryByDepartment} xKey="department" yKey="totalSalary"/>
+                <CustomBarChart data = {highestSalaryByDepartment} xKey="department" yKey="highestSalary"/>
             </div>
         ): (
             <>
@@ -71,9 +75,13 @@ const Statistics = () => {
                 <div className="grid grid-cols-4 gap-6 mt-5">
                     {departments.map((el) => (<p key={el.department} className='border rounded p-2 text-center'>{el.department} - {el.count}</p>))}
                 </div>
-                <h3 className='mt-10 font-semibold'>Salary: </h3>
+                <h3 className='mt-10 font-semibold'>Total Salary by Department: </h3>
                 <div className="grid grid-cols-4 gap-6 mt-5">
-                    {employeesData.map((el) => (<p key={el.id} className='border rounded p-2 text-center'>{el.name} - {el.salary}</p>))}
+                    {totalSalaryByDepartment.map((el) => (<p key={el.department} className='border rounded p-2 text-center'>{el.department} - {formatCurrency(el.totalSalary)}</p>))}
+                </div>
+                <h3 className='mt-10 font-semibold'>Highest Salary paid by Department: </h3>
+                <div className="grid grid-cols-4 gap-6 mt-5">
+                    {highestSalaryByDepartment.map((el) => (<p key={el.department} className='border rounded p-2 text-center'>{el.department} - {formatCurrency(el.highestSalary)}</p>))}
                 </div>
             </>
         )}      

@@ -11,15 +11,28 @@
     count: number
   }
 
+  interface SalaryByDept{
+    department: string,
+    totalSalary: number
+  }
+
+  interface HighestSalByDept{
+    department: string,
+    highestSalary: number,
+  }
+
   interface EmployeeReducerResult {
-       totalEmployees: number
-       highestSalary: number,
-       lowestSalary: number,
-       totalSalaryPaid: number,
-       activeEmployees: number,
-       inActiveEmployees: number,
-       averageSalary: number,
-       departments: DepartmentSummary[]
+       totalEmployees: number;
+       highestSalary: number;
+       lowestSalary: number;
+       totalSalaryPaid: number;
+       activeEmployees: number;
+       inActiveEmployees: number;
+       averageSalary: number;
+       departments: DepartmentSummary[];
+       groupByDepartment: Record<string, Employee[]>;
+       totalSalaryByDepartment: SalaryByDept[];
+       highestSalaryByDepartment: HighestSalByDept[];
   }
 
   function calculateEmployeeStatistics(employees:Employee[]): EmployeeReducerResult {
@@ -33,7 +46,10 @@
             activeEmployees:0,
             averageSalary: 0,
             inActiveEmployees:0,
-            departments:[]
+            departments:[],
+            groupByDepartment: {},
+            totalSalaryByDepartment: [],
+            highestSalaryByDepartment: []
         }
     }
 
@@ -50,11 +66,25 @@
             acc.inActiveEmployees++
         }
 
+        // Group employees by department and count them
         if(!acc.departments[employee.department]){
-            acc.departments[employee.department] = {department: employee.department, count: 1};
-        }else{
-            acc.departments[employee.department].count++;
+            acc.departments[employee.department] = {department: employee.department, count: 0};
         }
+        acc.departments[employee.department].count++;
+        
+        // Group employees by department for detailed listing
+        if(!acc.groupByDepartment[employee.department]){
+            acc.groupByDepartment[employee.department] = []
+        }
+        acc.groupByDepartment[employee.department].push(employee);
+
+        // Total Salary paid by Department
+        acc.totalSalaryByDepartment[employee.department] ??= {department:employee.department, totalSalary: 0}
+        acc.totalSalaryByDepartment[employee.department].totalSalary += salary;
+        
+        // Highest Salary by department
+        acc.highestSalaryByDepartment[employee.department] ??= {department: employee.department, highestSalary: -Infinity};
+        acc.highestSalaryByDepartment[employee.department].highestSalary = Math.max(acc.highestSalaryByDepartment[employee.department].highestSalary, salary)
 
         return acc;
   },{
@@ -63,7 +93,10 @@
      totalSalaryPaid: 0,
      activeEmployees: 0,
      inActiveEmployees: 0,
-     departments: {} as Record<string, DepartmentSummary>
+     departments: {} as Record<string, DepartmentSummary>,
+     groupByDepartment: {} as Record<string, Employee[]>,
+     totalSalaryByDepartment: {} as Record<string, SalaryByDept>,
+     highestSalaryByDepartment: {} as Record<string, HighestSalByDept>
   });
 
   return {
@@ -75,6 +108,9 @@
       departments: Object.values(stats.departments),
       totalEmployees: employees.length,
       averageSalary: stats.totalSalaryPaid / employees.length,
+      groupByDepartment: stats.groupByDepartment,
+      totalSalaryByDepartment: Object.values(stats.totalSalaryByDepartment),
+      highestSalaryByDepartment: Object.values(stats.highestSalaryByDepartment)
   }
 }
 
