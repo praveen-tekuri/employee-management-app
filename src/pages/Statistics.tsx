@@ -19,8 +19,7 @@ const Statistics = () => {
         totalEmployees,
         averageSalary,
         groupByDepartment,
-        totalSalaryByDepartment,
-        highestSalaryByDepartment
+        uniqueDepartments
         } = calculateEmployeeStatistics(employeesData);
 
    const formatCurrency = (value: number) => new Intl.NumberFormat("en-In", {style: 'currency', currency: 'INR'}).format(value);
@@ -66,8 +65,8 @@ const Statistics = () => {
         {showCharts ? (
             <div className="grid grid-cols-2 gap-6 mt-10">
                 <CustomBarChart data = {departments} xKey="department" yKey="count"/>
-                <CustomBarChart data = {totalSalaryByDepartment} xKey="department" yKey="totalSalary"/>
-                <CustomBarChart data = {highestSalaryByDepartment} xKey="department" yKey="highestSalary"/>
+                <CustomBarChart data = {departments} xKey="department" yKey="totalSalary"/>
+                <CustomBarChart data = {departments} xKey="department" yKey="highestSalary"/>
             </div>
         ): (
             <>
@@ -77,11 +76,24 @@ const Statistics = () => {
                 </div>
                 <h3 className='mt-10 font-semibold'>Total Salary by Department: </h3>
                 <div className="grid grid-cols-4 gap-6 mt-5">
-                    {totalSalaryByDepartment.map((el) => (<p key={el.department} className='border rounded p-2 text-center'>{el.department} - {formatCurrency(el.totalSalary)}</p>))}
+                    {departments.map((el) => (<p key={el.department} className='border rounded p-2 text-center'>{el.department} - {formatCurrency(el.totalSalary)}</p>))}
                 </div>
                 <h3 className='mt-10 font-semibold'>Highest Salary paid by Department: </h3>
                 <div className="grid grid-cols-4 gap-6 mt-5">
-                    {highestSalaryByDepartment.map((el) => (<p key={el.department} className='border rounded p-2 text-center'>{el.department} - {formatCurrency(el.highestSalary)}</p>))}
+                    {departments.map((el) => (<p key={el.department} className='border rounded p-2 text-center'>{el.department} - {formatCurrency(el.highestSalary)}</p>))}
+                </div>
+                <h3 className='mt-10 font-semibold'>Departments: </h3>
+                <div className="grid grid-cols-4 gap-6 mt-5">
+                    {uniqueDepartments.map((el) => (<p key={el} className='border rounded p-2 text-center'>{el}</p>))}
+                </div>
+                <h3 className='mt-10 font-semibold'>Employees By Departments: </h3>
+                <div className="grid grid-cols-4 gap-6 mt-5">
+                    {Object.entries(groupByDepartment).map(([department, employees]) => (
+                        <div key={department}>
+                            <h3 className='text-xl'>{department}</h3>
+                            {employees.map((emp) => <p key={emp.name}>{emp.name} - {formatCurrency(emp.salary)}</p>)}
+                        </div>   
+                    ))}
                 </div>
             </>
         )}      
