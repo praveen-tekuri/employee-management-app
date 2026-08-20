@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom"
-import { useGlobalAuthContext } from "./context/AuthContext";
+import { useGlobalAuthContext } from "../../context/AuthContext";
 
 // Authentication & Authorization
 

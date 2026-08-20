@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react"
-import { useGlobalAuthContext } from "../context/AuthContext";
+import { useGlobalAuthContext } from "../../context/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import CustomBarChart from '../components/CustomBarChart';
-import { useGlobalEmployee } from '../context/EmployeeContext'
-import calculateEmployeeStatistics from '../utils/employeeStatistics';
+import CustomBarChart from '../../components/CustomBarChart';
+import { useGlobalEmployee } from '../../context/EmployeeContext'
+import calculateEmployeeStatistics from '../../utils/employeeStatistics';
 
 const Statistics = () => {
   const [showCharts, setShowCharts] = useState(false);

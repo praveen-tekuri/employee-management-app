@@ -1,6 +1,6 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
-import type { Employee as EmployeeModel } from "../data/models/employee.types"
-import { useGlobalEmployee } from "../context/EmployeeContext"
+import type { Employee as EmployeeModel } from "../../data/models/employee.types"
+import { useGlobalEmployee } from "../../context/EmployeeContext"
 import {useNavigate } from "react-router-dom"
 
 type AddEmployeeForm = Omit<EmployeeModel, "id" | "isActive">

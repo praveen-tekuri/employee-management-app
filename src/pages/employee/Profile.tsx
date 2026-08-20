@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useGlobalAuthContext } from "../context/AuthContext"
-import { useGlobalEmployee } from "../context/EmployeeContext";
-import type { Employee } from "../data/models/employee.types";
+import { useGlobalAuthContext } from "../../context/AuthContext"
+import { useGlobalEmployee } from "../../context/EmployeeContext";
+import type { Employee } from "../../data/models/employee.types";
 
 const Profile = () => {
   const {employees, handleGetEmployee} = useGlobalEmployee();

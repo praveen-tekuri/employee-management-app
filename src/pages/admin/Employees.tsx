@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import EmployeeRow from '../components/EmployeeRow'
-import { useGlobalEmployee } from '../context/EmployeeContext'
+import EmployeeRow from '../../components/EmployeeRow'
+import { useGlobalEmployee } from '../../context/EmployeeContext'
 
 const Employees = () => {
 
