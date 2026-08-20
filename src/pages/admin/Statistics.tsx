@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import CustomBarChart from '../../components/CustomBarChart';
+import CustomBarChart from '../../components/admin/CustomBarChart';
 import { useGlobalEmployee } from '../../context/EmployeeContext'
 import calculateEmployeeStatistics from '../../utils/employeeStatistics';
 

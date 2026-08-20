@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { useGlobalEmployee } from '../context/EmployeeContext';
-import type { Employee as EmployeeModel } from '../data/models/employee.types';
-import { useGlobalAuthContext } from '../context/AuthContext';
+import { useGlobalEmployee } from '../../context/EmployeeContext';
+import type { Employee as EmployeeModel } from '../../data/models/employee.types';
+import { useGlobalAuthContext } from '../../context/AuthContext';
 
 interface EmployeeRowProps{
     employee: EmployeeModel;

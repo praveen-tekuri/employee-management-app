@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import EmployeeRow from '../../components/EmployeeRow'
+import EmployeeRow from '../../components/admin/EmployeeRow'
 import { useGlobalEmployee } from '../../context/EmployeeContext'
 
 const Employees = () => {
