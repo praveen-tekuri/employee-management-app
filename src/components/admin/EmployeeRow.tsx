@@ -31,7 +31,7 @@ const EmployeeRow = ({employee}:EmployeeRowProps) => {
   }
   return (
     <tr>
-        <td className='border p-2'>{id}</td>
+        <td className='border p-2'>{String(id).slice(-4)}</td>
         <td className='border p-2'>{name}</td>
         <td className='border p-2'>{gender}</td>
         <td className='border p-2'>{email}</td>

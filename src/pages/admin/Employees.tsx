@@ -45,29 +45,31 @@ const Employees = () => {
                 </select>
             </div>
         </div>
-        <table className='w-full'>
-            <thead>
-                <tr>
-                    <th className='border p-2 text-left'>Id</th>
-                    <th className='border p-2 text-left'>Name</th>
-                    <th className='border p-2 text-left'>Gender</th>
-                    <th className='border p-2 text-left'>Email</th>
-                    <th className='border p-2 text-left'>Mobile</th>
-                    <th className='border p-2 text-left'>Address</th>
-                    <th className='border p-2 text-left'>Department</th>
-                    <th className='border p-2 text-left'>Skills</th>
-                    <th className='border p-2 text-left'>Salary</th>
-                    <th className='border p-2 text-left'>Role</th>
-                    <th className='border p-2 text-left'>Is Active?</th>
-                    <th className='border p-2 text-left'>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {sortAndFilteredEmployees.map((employee) => (
-                    <EmployeeRow key={employee.id} employee={employee}/>
-                ))}
-            </tbody>
-        </table>
+        <div className="w-full overflow-x-auto">
+            <table className='w-full min-w-200'>
+                <thead>
+                    <tr>
+                        <th className='border p-2 text-left'>Id</th>
+                        <th className='border p-2 text-left'>Name</th>
+                        <th className='border p-2 text-left'>Gender</th>
+                        <th className='border p-2 text-left'>Email</th>
+                        <th className='border p-2 text-left'>Mobile</th>
+                        <th className='border p-2 text-left'>Address</th>
+                        <th className='border p-2 text-left'>Department</th>
+                        <th className='border p-2 text-left'>Skills</th>
+                        <th className='border p-2 text-left'>Salary</th>
+                        <th className='border p-2 text-left'>Role</th>
+                        <th className='border p-2 text-left'>Is Active?</th>
+                        <th className='border p-2 text-left'>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {sortAndFilteredEmployees.map((employee) => (
+                        <EmployeeRow key={employee.id} employee={employee}/>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     </div>
   )
 }

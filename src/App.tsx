@@ -24,6 +24,7 @@ function App() {
                   <Route path='employee/dashboard' element={<EmployeeDashboard/>}>
                       <Route index element={<Profile/>}/>
                       <Route path='profile' element={<Profile/>}/>
+                      <Route path='edit-employee' element={<AddEmployee/>}/>
                       <Route path='learnings' element={<h1>Learnings</h1>}/>
                       <Route path='quiz' element={<h1>Quiz component</h1>}/>
                       <Route path='weather' element={<h1>Check Weather</h1>}/>

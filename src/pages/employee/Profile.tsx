@@ -19,13 +19,13 @@ const Profile = () => {
   
   const handleEditEmployee = (emp: Employee) => {
       handleGetEmployee(emp);
-      navigate("/edit-employee");
+      navigate("/employee/dashboard/edit-employee");
   }
   
   return (
     <div>
         <h1>Profile</h1>
-        <div className="border p-5 rounded w-[50%] mx-auto grid grid-cols-2">
+        <div className="border p-5 rounded w-full grid grid-cols-2">
           <div className="col">
             <p className="mb-3"><span className="font-semibold">Name: </span><span>{name}</span></p>
             <p className="mb-3"><span className="font-semibold">Gender:</span> <span>{gender}</span></p>

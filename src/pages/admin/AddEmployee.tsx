@@ -62,7 +62,7 @@ const AddEmployee = () => {
   return (
     <div>
         <h1>{updateEmployeeData ? "Update Employee": "Add Employee"}</h1>
-        <form onSubmit={handleSubmit} className="w-[70%] mx-auto border p-5 rounded">
+        <form onSubmit={handleSubmit} className="w-full mx-auto border p-5 rounded">
             <div className="grid grid-cols-2 gap-6">
                 <div className="form-control">
                     <label htmlFor="name">Name</label>
