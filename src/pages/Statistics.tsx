@@ -88,7 +88,7 @@ const Statistics = () => {
                 </div>
                 <h3 className='mt-10 font-semibold'>Employees By Departments: </h3>
                 <div className="grid grid-cols-4 gap-6 mt-5">
-                    {Array.from(groupByDepartment.entries()).map(([department, employees]) => (
+                    {Object.entries(groupByDepartment).map(([department, employees]) => (
                         <div key={department}>
                             <h3 className='text-xl'>{department}</h3>
                             {employees.map((emp) => <p key={emp.name}>{emp.name} - {formatCurrency(emp.salary)}</p>)}
