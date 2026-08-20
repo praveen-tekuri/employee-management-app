@@ -10,7 +10,7 @@ const Navbar = () => {
   
   // Clear Update Employee Data on Unmount or when navigating away from edit-employee route
   useEffect(() => {
-    if(!location.pathname.startsWith("/edit-employee")){
+    if(!location.pathname.startsWith("/employee/dashboard/edit-employee")){
         handleClearUpdateId();
     }
   },[location.pathname, handleClearUpdateId])
