@@ -11,6 +11,7 @@ import Profile from './pages/employee/Profile'
 import AdminDashboard from './dashboard/AdminDashboard'
 import EmployeeDashboard from './dashboard/EmployeeDashboard'
 import Unauthorized from './pages/auth/Unauthorized'
+import Quiz from './components/employee/Quiz'
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
                       <Route path='profile' element={<Profile/>}/>
                       <Route path='edit-employee' element={<AddEmployee/>}/>
                       <Route path='learnings' element={<h1>Learnings</h1>}/>
-                      <Route path='quiz' element={<h1>Quiz component</h1>}/>
+                      <Route path='quiz' element={<Quiz/>}/>
                       <Route path='weather' element={<h1>Check Weather</h1>}/>
                       <Route path='cab-booking' element={<h1>Cab Booking</h1>}/>
                       <Route path='shopping' element={<h1>Shopping</h1>}/>
