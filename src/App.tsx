@@ -12,6 +12,7 @@ import AdminDashboard from './dashboard/AdminDashboard'
 import EmployeeDashboard from './dashboard/EmployeeDashboard'
 import Unauthorized from './pages/auth/Unauthorized'
 import Quiz from './components/employee/Quiz'
+import Weather from './components/common/Weather'
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
                       <Route path='edit-employee' element={<AddEmployee/>}/>
                       <Route path='learnings' element={<h1>Learnings</h1>}/>
                       <Route path='quiz' element={<Quiz/>}/>
-                      <Route path='weather' element={<h1>Check Weather</h1>}/>
+                      <Route path='weather' element={<Weather/>}/>
                       <Route path='cab-booking' element={<h1>Cab Booking</h1>}/>
                       <Route path='shopping' element={<h1>Shopping</h1>}/>
                   </Route>
