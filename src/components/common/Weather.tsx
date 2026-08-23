@@ -12,12 +12,15 @@ const weatherApiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
 const Weather = () => {
   const [city, setCity] = useState("Hyderabad");
+  const [loading, setLoading] = useState(false);
   const [weatherData, setWeatherData] = useState<weatherResponse | null>(null);
  
   const fetchWeather = async() => {
     try{
+      setLoading(true)
       const resp = await axios.get<weatherResponse>(`${weatherApiUrl}?q=${city}&appid=${weatherApiKey}&units=metric`);
       setWeatherData(resp.data);
+      setLoading(false);
     }catch(error){
       console.error("Failed to fetch weather ",error);
     }
@@ -30,6 +33,7 @@ const Weather = () => {
             <input value={city} onChange={(e) => setCity(e.target.value)} className='border p-2 block rounded w-full' type="text" />
             <button onClick={fetchWeather} className='border rounded p-2 cursor-pointer flex mt-5'>Check Weather</button>
         </div>
+        {loading && <h3 className='text-center mt-3'>Loading...</h3>}
         { weatherData && ( 
             <div className="weather-details mt-5 text-center flex flex-col">
               <img src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} className='w-[90px] mx-auto' alt="weather icon"/>
