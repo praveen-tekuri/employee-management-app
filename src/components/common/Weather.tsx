@@ -27,7 +27,7 @@ const Weather = () => {
   }
   
   return (
-    <div className='border p-5 rounded w-[50%]'>
+    <div className='border p-5 rounded w-[50%] mx-auto'>
       <h1>Weather Report</h1>
         <div className="search-weather">
             <input value={city} onChange={(e) => setCity(e.target.value)} className='border p-2 block rounded w-full' type="text" />

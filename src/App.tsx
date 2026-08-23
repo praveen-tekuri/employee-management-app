@@ -13,6 +13,7 @@ import EmployeeDashboard from './dashboard/EmployeeDashboard'
 import Unauthorized from './pages/auth/Unauthorized'
 import Quiz from './components/employee/Quiz'
 import Weather from './components/common/Weather'
+import FaqContainer from './pages/common/FaqContainer'
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
           <Route path='/'  element={<AppLayout/>}>
               <Route index element={<Home/>}/>
               <Route path='login' element={<Login/>}/>
+              <Route path='weather' element={<Weather/>}/>
+              <Route path='faq' element={<FaqContainer/>}/>
 
               <Route element ={<ProtectedRoute allowedRoutes={["Employee"]} />}>
                   <Route path='employee/dashboard' element={<EmployeeDashboard/>}>

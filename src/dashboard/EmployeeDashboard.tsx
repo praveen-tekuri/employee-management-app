@@ -10,7 +10,6 @@ const EmployeeDashboard = () => {
                     <li><Link className='py-2' to="profile">Profile</Link></li>
                     <li><Link className='py-2' to="learnings">Learnings</Link></li>
                     <li><Link className='py-2' to="quiz">Take Quiz</Link></li>
-                    <li><Link className='py-2' to="weather">Check Weather</Link></li>
                     <li><Link className='py-2' to="cab-booking">Cab Booking</Link></li>
                     <li><Link className='py-2' to="shopping">Shopping</Link></li>
                 </ul>
