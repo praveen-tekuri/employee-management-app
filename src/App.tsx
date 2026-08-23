@@ -15,6 +15,7 @@ import Quiz from './components/employee/Quiz'
 import Weather from './components/common/Weather'
 import FaqContainer from './pages/common/FaqContainer'
 import Learnings from './components/employee/Learnings'
+import GithubActivity from './components/admin/GithubActivity'
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
                       <Route path='add-employee' element={<AddEmployee/>}/>
                       <Route path='employees' element={<Employees/>}/>
                       <Route path='statistics' element={<Statistics/>}/>
+                      <Route path='github-activity' element={<GithubActivity/>}/>
                       <Route path='reports' element={<h1>Reports</h1>}/>
                   </Route>
               </Route>

@@ -10,6 +10,7 @@ const AdminDashboard = () => {
                     <li><Link to="add-employee">Add Employee</Link></li>
                     <li><Link to="employees">Employees</Link></li>
                     <li><Link to="statistics">View Statistics</Link></li>
+                    <li><Link to="github-activity">GitHub Activity</Link></li>
                     <li><Link to="reports">Reports</Link></li>
                 </ul>
             </nav>
