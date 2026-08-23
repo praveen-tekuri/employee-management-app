@@ -16,6 +16,7 @@ import Weather from './components/common/Weather'
 import FaqContainer from './pages/common/FaqContainer'
 import Learnings from './components/employee/Learnings'
 import GithubActivity from './components/admin/GithubActivity'
+import TodoContainer from './pages/common/TodoContainer'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path='login' element={<Login/>}/>
               <Route path='weather' element={<Weather/>}/>
               <Route path='faq' element={<FaqContainer/>}/>
+              <Route path='todo' element={<TodoContainer/>}/>
 
               <Route element ={<ProtectedRoute allowedRoutes={["Employee"]} />}>
                   <Route path='employee/dashboard' element={<EmployeeDashboard/>}>
