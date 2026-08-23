@@ -14,6 +14,7 @@ import Unauthorized from './pages/auth/Unauthorized'
 import Quiz from './components/employee/Quiz'
 import Weather from './components/common/Weather'
 import FaqContainer from './pages/common/FaqContainer'
+import Learnings from './components/employee/Learnings'
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
                       <Route index element={<Profile/>}/>
                       <Route path='profile' element={<Profile/>}/>
                       <Route path='edit-employee' element={<AddEmployee/>}/>
-                      <Route path='learnings' element={<h1>Learnings</h1>}/>
+                      <Route path='learnings' element={<Learnings/>}/>
                       <Route path='quiz' element={<Quiz/>}/>
                       <Route path='weather' element={<Weather/>}/>
                       <Route path='cab-booking' element={<h1>Cab Booking</h1>}/>
