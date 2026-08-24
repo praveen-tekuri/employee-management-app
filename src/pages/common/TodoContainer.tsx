@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react"
+import { useCallback, useState, type FormEvent } from "react"
 import Todo from "../../components/common/Todo";
 
 export interface TodoTypes{
@@ -17,9 +17,9 @@ const TodoContainer = () => {
     setTodo("");
   }
 
-  const handleDelete = (id:number) => {
+  const handleDelete = useCallback((id:number) => {
      setTodoList((prev) => prev.filter((el) => el.id !== id));
-  }
+  },[])
   
   return (
     <div className="w-[50%] mx-auto">

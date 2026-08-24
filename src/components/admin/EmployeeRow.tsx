@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalEmployee } from '../../context/EmployeeContext';
 import type { Employee as EmployeeModel } from '../../data/models/employee.types';
@@ -7,7 +8,8 @@ interface EmployeeRowProps{
     employee: EmployeeModel;
 }
 
-const EmployeeRow = ({employee}:EmployeeRowProps) => {
+const EmployeeRow = React.memo(({employee}:EmployeeRowProps) => {
+  console.log("Employee rendered", employee.id);
 
   const navigate = useNavigate();
   
@@ -53,6 +55,6 @@ const EmployeeRow = ({employee}:EmployeeRowProps) => {
         </td>
     </tr>
   )
-}
+})
 
 export default EmployeeRow

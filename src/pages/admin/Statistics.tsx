@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import CustomBarChart from '../../components/admin/CustomBarChart';
 import { useGlobalEmployee } from '../../context/EmployeeContext'
 import calculateEmployeeStatistics from '../../utils/employeeStatistics';
@@ -7,8 +7,10 @@ const Statistics = () => {
   const [showCharts, setShowCharts] = useState(false);
   const {employees} = useGlobalEmployee();
 
-  const employeesData = employees?.employeesData || [];
+  const employeesData = useMemo(() => employees?.employeesData || [], [employees]); // EsLint fix
   
+  const employeeStats = useMemo(() => calculateEmployeeStatistics(employeesData),[employeesData])
+
   const {
         highestSalary, 
         lowestSalary,  
@@ -20,7 +22,7 @@ const Statistics = () => {
         averageSalary,
         groupByDepartment,
         uniqueDepartments
-        } = calculateEmployeeStatistics(employeesData);
+        } = employeeStats;
 
    const formatCurrency = (value: number) => new Intl.NumberFormat("en-In", {style: 'currency', currency: 'INR'}).format(value);
 

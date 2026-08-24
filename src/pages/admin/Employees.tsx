@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import EmployeeRow from '../../components/admin/EmployeeRow'
 import { useGlobalEmployee } from '../../context/EmployeeContext'
 
@@ -9,11 +9,11 @@ const Employees = () => {
 
   const {employees: {employeesData}} = useGlobalEmployee();
 
-  const filteredEmployees = employeesData.filter((emp) => 
+  const filteredEmployees = useMemo(() => employeesData.filter((emp) => 
     [emp.name, emp.gender, emp.role, emp.skills.join(" ")].join(" ").toLowerCase().includes(term.toLowerCase())
-  )
+  ),[employeesData, term]);
 
-  const sortAndFilteredEmployees = [...filteredEmployees].sort((a, b) => {
+  const sortAndFilteredEmployees = useMemo(() => [...filteredEmployees].sort((a, b) => {
     if(sortBy === "name-asc"){
         return a.name.localeCompare(b.name)
     }else if(sortBy === "name-desc"){
@@ -24,7 +24,8 @@ const Employees = () => {
         return b.salary - a.salary;
     }
     return 0;
-  })
+  }),
+  [filteredEmployees, sortBy])
 
   if(employeesData.length < 1) return <h1>No Employees Found</h1>
   

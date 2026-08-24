@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useEffect, useCallback } from "react";
+import { createContext, useContext, useReducer, useEffect, useCallback, useMemo } from "react";
 import type { Employee as EmployeeModel} from "../data/models/employee.types";
 
 // import employeesMockData from "../data/mock/employees";
@@ -87,33 +87,33 @@ const EmployeeProvider = ({children}:{children: React.ReactNode}) => {
       },[employees.employeesData])
     
 
-    const handleAddEmployee = (employee:EmployeeModel) => {
+    const handleAddEmployee = useCallback((employee:EmployeeModel) => {
         dispatch({
             type: "ADD",
             payload: employee
         })
-    }
+    },[]);
 
-    const handleGetEmployee = (employee:EmployeeModel) => {
+    const handleGetEmployee = useCallback((employee:EmployeeModel) => {
         dispatch({
             type: "GET_UPDATE_ID",
             payload: employee
         })
-    }
+    },[]);
 
-    const handleUpdateEmployee = (employee: EmployeeModel, id: string | number) => {
+    const handleUpdateEmployee = useCallback((employee: EmployeeModel, id: string | number) => {
         dispatch({
             type: "UPDATE",
             payload: {employee, id}
         })
-    } 
+    },[]) 
 
-    const handleDeleteEmployee = (id: string | number) => {
+    const handleDeleteEmployee = useCallback((id: string | number) => {
         dispatch({
             type: "DELETE",
             payload: id
         })
-    }
+    },[])
 
     const handleClearUpdateId = useCallback(() => {
         dispatch({
@@ -121,9 +121,23 @@ const EmployeeProvider = ({children}:{children: React.ReactNode}) => {
         })
     },[])
 
-    return <EmployeeContext.Provider value={{
-        employees, handleGetEmployee, handleAddEmployee, handleUpdateEmployee, handleDeleteEmployee, handleClearUpdateId
-    }}> {children}</EmployeeContext.Provider>
+    const contextValue = useMemo(() => ({
+            employees, 
+            handleGetEmployee, 
+            handleAddEmployee, 
+            handleUpdateEmployee, 
+            handleDeleteEmployee, 
+            handleClearUpdateId
+    }),[
+        employees, 
+        handleGetEmployee, 
+        handleAddEmployee, 
+        handleUpdateEmployee, 
+        handleDeleteEmployee, 
+        handleClearUpdateId
+    ]) 
+
+    return <EmployeeContext.Provider value={contextValue}> {children}</EmployeeContext.Provider>
 }
 
 export const useGlobalEmployee = () => {

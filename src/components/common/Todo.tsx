@@ -1,4 +1,4 @@
-
+import React from "react";
 import type { TodoTypes } from "../../pages/common/TodoContainer"
 import { useState } from "react";
 
@@ -6,7 +6,7 @@ interface TodoProps extends TodoTypes{
   handleDelete: (id: number) => void;   
 }
 
-const Todo = ({id, item, handleDelete}: TodoProps) => {
+const Todo = React.memo(({id, item, handleDelete}: TodoProps) => {
   const [isCompleted, setIsCompleted] = useState(false);
   const capitalized = item ? item.charAt(0).toUpperCase() + item.slice(1): "";
   return (
@@ -18,6 +18,6 @@ const Todo = ({id, item, handleDelete}: TodoProps) => {
         <button onClick={() => handleDelete(id)} aria-label={`Delete ${item}`} className="bg-red-600 py-1 px-2 rounded cursor-pointer text-white">Delete</button>
     </div>
   )
-}
+})
 
 export default Todo

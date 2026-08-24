@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalAuthContext } from "../../context/AuthContext"
 import { useGlobalEmployee } from "../../context/EmployeeContext";
@@ -5,14 +6,13 @@ import type { Employee } from "../../data/models/employee.types";
 
 const Profile = () => {
   const {employees, handleGetEmployee} = useGlobalEmployee();
-  const employeeData = employees?.employeesData || [];
+  const employeeData = useMemo(() => employees?.employeesData || [],[employees]); // EsLint Fix
   const {user} = useGlobalAuthContext();
   const navigate = useNavigate();
-
+  
+  const profileData = useMemo(() => employeeData.find((emp: Employee) => emp.id === user?.id),[employeeData, user?.id]);
+  
   if(!user) return <h1>No User logged In</h1>;
-
-  const profileData = employeeData.find((emp: Employee) => emp.id === user?.id);
-
   if(!profileData) return <h1>Profile Not found</h1>;
   
   const {name, gender, email, mobile, address, department, role, salary, skills}= profileData;

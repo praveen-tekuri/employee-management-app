@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import questions from "../../data/mock/questions";
 
 const Quiz = () => {
@@ -81,7 +81,7 @@ const Quiz = () => {
     }
   }
 
-  const calculateScore = () => {
+  const calculateScore = useMemo(() => {
      let score = 0;
      questions.forEach((question, index) => {
         if(selectedAns[index] === question.answer) score++;
@@ -92,7 +92,7 @@ const Quiz = () => {
                    percentage >= 50 ? "Good": "Needs Improvement"
 
      return {score, grade}
-  }
+  },[selectedAns])
 
   const resetQuiz = () => {
     startExam();
@@ -106,7 +106,7 @@ const Quiz = () => {
   }
 
   if(showResults){
-    const {score, grade} = calculateScore();
+    const {score, grade} = calculateScore;
     return <>
         <h3 className="text-2xl">Exam Completed</h3>
         <p className="my-5">Your Score: {score} / {questions.length} ({grade})</p>
