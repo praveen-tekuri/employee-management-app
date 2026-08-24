@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { Employee } from "../data/models/employee.types";
 
 interface AuthContextType{
@@ -19,7 +19,7 @@ const AuthProvider = ({children}:{children:ReactNode}) => {
         if(storedUser) setUser(storedUser);
     },[])
 
-    const handleLogin = (username: string, password: string): Employee | null => {
+    const handleLogin = useCallback((username: string, password: string): Employee | null => {
         const isEmployeesExist = localStorage.getItem("employees");
         const employees: Employee[] = isEmployeesExist ? JSON.parse(isEmployeesExist): []
         const foundUser = employees.find((emp) => emp.email === username && `${emp.email.slice(0, 4)}@123` === password);
@@ -29,14 +29,18 @@ const AuthProvider = ({children}:{children:ReactNode}) => {
             return foundUser;
         }
         return null;
-    }
+    },[])
 
-    const handleLogout = () => {
+    const handleLogout = useCallback(() => {
         setUser(null);
         localStorage.removeItem("LoggedInUser");
-    }
+    },[])
 
-    return <AuthContext.Provider value={{user, handleLogin, handleLogout}}>
+    const contextValues = useMemo(() => ({
+        user, handleLogin, handleLogout
+    }),[user, handleLogin, handleLogout])
+
+    return <AuthContext.Provider value={contextValues}>
         {children}
     </AuthContext.Provider>
 }
