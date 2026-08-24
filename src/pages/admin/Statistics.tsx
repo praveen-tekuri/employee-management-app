@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
-import CustomBarChart from '../../components/admin/CustomBarChart';
 import { useGlobalEmployee } from '../../context/EmployeeContext'
 import calculateEmployeeStatistics from '../../utils/employeeStatistics';
+import DepartmentGrid from '../../components/admin/DepartmentGrid';
+import CustomBarChart from '../../components/admin/CustomBarChart';
 
 const Statistics = () => {
   const [showCharts, setShowCharts] = useState(false);
@@ -24,7 +25,7 @@ const Statistics = () => {
         uniqueDepartments
         } = employeeStats;
 
-   const formatCurrency = (value: number) => new Intl.NumberFormat("en-In", {style: 'currency', currency: 'INR'}).format(value);
+   const formatCurrency = (value: number | string) => new Intl.NumberFormat("en-In", {style: 'currency', currency: 'INR'}).format(value);
 
   return (
     <div>
@@ -72,18 +73,9 @@ const Statistics = () => {
             </div>
         ): (
             <>
-            <h3 className='mt-10 font-semibold'>Department Count:</h3>
-                <div className="grid grid-cols-4 gap-6 mt-5">
-                    {departments.map((el) => (<p key={el.department} className='border rounded p-2 text-center'>{el.department} - {el.count}</p>))}
-                </div>
-                <h3 className='mt-10 font-semibold'>Total Salary by Department: </h3>
-                <div className="grid grid-cols-4 gap-6 mt-5">
-                    {departments.map((el) => (<p key={el.department} className='border rounded p-2 text-center'>{el.department} - {formatCurrency(el.totalSalary)}</p>))}
-                </div>
-                <h3 className='mt-10 font-semibold'>Highest Salary paid by Department: </h3>
-                <div className="grid grid-cols-4 gap-6 mt-5">
-                    {departments.map((el) => (<p key={el.department} className='border rounded p-2 text-center'>{el.department} - {formatCurrency(el.highestSalary)}</p>))}
-                </div>
+                <DepartmentGrid title="Department Count" data={departments} valueKey="count"/>
+                <DepartmentGrid title="Total Salary by Department" data={departments} valueKey="totalSalary" format={formatCurrency}/>
+                <DepartmentGrid title="Highest Salary paid by Department" data={departments} valueKey="highestSalary" format={formatCurrency}/>
                 <h3 className='mt-10 font-semibold'>Departments: </h3>
                 <div className="grid grid-cols-4 gap-6 mt-5">
                     {uniqueDepartments.map((el) => (<p key={el} className='border rounded p-2 text-center'>{el}</p>))}
