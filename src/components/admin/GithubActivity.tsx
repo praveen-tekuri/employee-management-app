@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import useFetch from "../../hooks/useFetch";
 
 interface ApiResponse{
     avatar_url: string;
@@ -10,42 +11,23 @@ interface ApiResponse{
 
 const GithubActivity = () => {
   const [term, setTerm] = useState("");
-  const [user, setUser] = useState<ApiResponse | null>(null);
-  const [loading, setLoading] = useState(false);
+  const {loading, data:user, error, fetchData} = useFetch<ApiResponse>();
   
-  const fetchUser = async () => {
-    if(!term) return;
-    setLoading(true);
-    try {
-        const resp = await fetch(`https://api.github.com/users/${term}`);
-        const json: ApiResponse = await resp.json();
-        if(resp.status !== 200){
-            setUser(null);
-        }else{
-            setUser(json as ApiResponse);
-        }
-    } catch (error) {
-        console.error(error);
-        setUser(null);
-    } finally{
-        setLoading(false);
-    }
-  }
-
   useEffect(() => {
+    if(!term.trim()) return; 
      const timer = setTimeout(() => {
-        fetchUser();
+        fetchData(`https://api.github.com/users/${term}`);
      }, 800);
      return () => clearTimeout(timer);
-  },[term])
+  },[term, fetchData])
 
   return (
     <div>
         <h1>Check GitHub Activity</h1>
         <input value={term} onChange={(e) => setTerm(e.target.value)} type="text" placeholder="Search Employee" className="border rounded p-2" />
         {loading && <p className="mt-2">Loading...</p>}
-        {!loading && !user && term && <p className="mt-2">User not found</p>}
-        {user !== null && (
+        {error && <p className="mt-2 text-red-500">{error}</p>}
+        {user && (
             <div className="user-details mt-5">
                 <img src={user?.avatar_url} className="w-20 rounded" alt={user.name} />
                 <h3 className="mt-3 font-semibold">Name: {user.name}</h3>
