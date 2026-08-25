@@ -19,6 +19,7 @@ import GithubActivity from './components/admin/GithubActivity'
 import TodoContainer from './pages/common/TodoContainer'
 import Shopping from './pages/Shopping'
 import Products from './components/shopping/Products'
+import { ProductDetails } from './components/shopping/ProductDetails'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               <Route element={<ProtectedRoute allowedRoutes={["Employee", "Admin"]}/>}>
                   <Route path='shopping' element={<Shopping/>}/>
                   <Route path='products' element={<Products/>}/>
+                  <Route path='products/:id' element={<ProductDetails/>}/>
               </Route>
               <Route element ={<ProtectedRoute allowedRoutes={["Employee"]} />}>
                   <Route path='employee/dashboard' element={<EmployeeDashboard/>}>

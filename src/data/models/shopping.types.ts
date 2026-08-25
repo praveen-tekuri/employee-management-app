@@ -6,6 +6,8 @@ export interface ProductTypeAttributes{
     company:string;
     category: string;
     shipping:boolean;
+    description: string;
+    colors: string[];
 }
 
 export interface ProductTypes{
