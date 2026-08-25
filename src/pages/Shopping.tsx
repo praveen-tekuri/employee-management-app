@@ -2,27 +2,17 @@ import { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch"
 import Product from "../components/shopping/Product";
 import { Link } from "react-router-dom";
+import type { ProductApiResponse } from "../data/models/shopping.types";
 import heroImage1 from "../assets/hero-image-1.webp";
 import heroImage2 from "../assets/hero-image-2.webp";
 import heroImage3 from "../assets/hero-image-3.webp";
 
 const shoppingSliderImages = [heroImage1, heroImage2, heroImage3];
 
-interface FeatureProductResponse{
-    data: {
-        id: number;
-        attributes: {
-            title: string;
-            price: number;
-            image: string;
-        }
-    }[]
-}
-
 const Shopping = () => {
   const[currentIndex, setCurrentIndex] = useState(0);
   
-  const {loading, data:featuredProducts, error, fetchData} = useFetch<FeatureProductResponse>();
+  const {loading, data:featuredProducts, error, fetchData} = useFetch<ProductApiResponse>();
   
   useEffect(() => {
      const timer = setInterval(() => {
