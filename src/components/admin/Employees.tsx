@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import EmployeeRow from '../../components/admin/EmployeeRow'
+import EmployeeRow from './EmployeeRow'
 import { useGlobalEmployee } from '../../context/EmployeeContext'
 
 const Employees = () => {

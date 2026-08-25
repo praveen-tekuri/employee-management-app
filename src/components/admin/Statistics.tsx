@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useGlobalEmployee } from '../../context/EmployeeContext'
 import calculateEmployeeStatistics from '../../utils/employeeStatistics';
-import DepartmentGrid from '../../components/admin/DepartmentGrid';
-import CustomBarChart from '../../components/admin/CustomBarChart';
+import DepartmentGrid from './DepartmentGrid';
+import CustomBarChart from './CustomBarChart';
+import formatCurrency from '../../utils/currencyFormatter';
 
 const Statistics = () => {
   const [showCharts, setShowCharts] = useState(false);
@@ -24,8 +25,6 @@ const Statistics = () => {
         groupByDepartment,
         uniqueDepartments
         } = employeeStats;
-
-   const formatCurrency = (value: number | string) => new Intl.NumberFormat("en-In", {style: 'currency', currency: 'INR'}).format(value);
 
   return (
     <div>

@@ -32,7 +32,10 @@ const Navbar = () => {
                 </>
             )}
             {user ? (
-                <button onClick={handleLogout} className='cursor-pointer'> {user.role}: Logout</button>
+                <>
+                    <li><Link to="/shopping">Shopping</Link></li>
+                    <button onClick={handleLogout} className='cursor-pointer'> {user.role}: Logout</button>
+                </>
             ): <li><Link to="/login">Login</Link></li>}
         </ul>
     </nav>

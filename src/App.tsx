@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import AppLayout from './components/layout/AppLayout'
-import AddEmployee from './pages/admin/AddEmployee'
-import Employees from './pages/admin/Employees'
-import Statistics from './pages/admin/Statistics'
+import AddEmployee from './components/admin/AddEmployee'
+import Employees from './components/admin/Employees'
+import Statistics from './components/admin/Statistics'
 import ProtectedRoute from './components/layout/ProtectedRoute'
 import Home from './pages/home/Home'
 import Login from './pages/auth/Login'
@@ -17,6 +17,7 @@ import FaqContainer from './pages/common/FaqContainer'
 import Learnings from './components/employee/Learnings'
 import GithubActivity from './components/admin/GithubActivity'
 import TodoContainer from './pages/common/TodoContainer'
+import Shopping from './pages/Shopping'
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
               <Route path='faq' element={<FaqContainer/>}/>
               <Route path='todo' element={<TodoContainer/>}/>
 
+              <Route element={<ProtectedRoute allowedRoutes={["Employee", "Admin"]}/>}>
+                  <Route path='shopping' element={<Shopping/>}/>
+              </Route>
               <Route element ={<ProtectedRoute allowedRoutes={["Employee"]} />}>
                   <Route path='employee/dashboard' element={<EmployeeDashboard/>}>
                       <Route index element={<Profile/>}/>
@@ -38,7 +42,6 @@ function App() {
                       <Route path='quiz' element={<Quiz/>}/>
                       <Route path='weather' element={<Weather/>}/>
                       <Route path='cab-booking' element={<h1>Cab Booking</h1>}/>
-                      <Route path='shopping' element={<h1>Shopping</h1>}/>
                   </Route>
               </Route>
               
