@@ -1,10 +1,20 @@
 
-import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from 'react';
 import useFetch from '../../hooks/useFetch'
 import type { ProductApiResponse, ProductTypes } from '../../data/models/shopping.types';
 import Product from './Product';
+import productFilters from '../../utils/productFilters';
 
-const formFields = { search: "", category: "all", company: "all", sortBy: "a-z", price: 0, shipping: false}
+export interface FormFieldTypes{
+    search: string;
+    category: string;
+    company: string;
+    sortBy: string;
+    price: number;
+    shipping: boolean
+}
+
+const formFields:FormFieldTypes = { search: "", category: "all", company: "all", sortBy: "a-z", price: 0, shipping: false}
 
 const Products = () => {
   const {loading, data:products, error, fetchData} = useFetch<ProductApiResponse>();
@@ -34,28 +44,11 @@ const Products = () => {
     }))
   }
 
+  const results = useMemo(() => productFilters(products, formData),[formData, products]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>)=> {
     event.preventDefault();
     console.log("form submitted");
-    const results = [...(products?.data || [])].filter((product) => {
-        const searchTitle = product.attributes.title.toLowerCase().includes(formData.search.toLowerCase());
-        const category = formData.category === "all" || product.attributes.category === formData.category;
-        const company = formData.company === "all" || product.attributes.company === formData.company;
-        const price = formData.price === 0 || product.attributes.price <= Number(formData.price);
-        const shipping = !formData.shipping || product.attributes.shipping === true;
-
-        return searchTitle && category && company && price && shipping;
-    })
-
-    if(formData.sortBy === "a-z"){
-        results.sort((a, b) => a.attributes.title.localeCompare(b.attributes.title));
-    }else if(formData.sortBy === "z-a"){
-        results.sort((a, b) => b.attributes.title.localeCompare(a.attributes.title));
-    }else if(formData.sortBy === "low"){
-        results.sort((a, b) => a.attributes.price - b.attributes.price);
-    }else if(formData.sortBy === "high"){
-        results.sort((a, b) => b.attributes.price - a.attributes.price);
-    }
     setFilteredProducts(results);
   }
 
@@ -66,6 +59,7 @@ const Products = () => {
 
   if(loading) return <h3>Loading...</h3>
   if(error) return <h3 className='text-red-500'>{error}</h3>
+  
   return (
     <div>
         <div className="filters">
