@@ -1,7 +1,7 @@
 import type { FormFieldTypes } from "../features/shopping/pages/Products";
-import type { ProductApiResponse, ProductTypes } from "../features/shopping/types/shopping.types";
+import type { ProductListApiResponse, ProductTypes } from "../features/shopping/types/shopping.types";
 
-const productFilters = (products:ProductApiResponse | null, formData:FormFieldTypes):ProductTypes[] => {
+const productFilters = (products:ProductListApiResponse | null, formData:FormFieldTypes):ProductTypes[] => {
     const results = [...(products?.data || [])].filter((product) => {
             const searchTitle = product.attributes.title.toLowerCase().includes(formData.search.toLowerCase());
             const category = formData.category === "all" || product.attributes.category === formData.category;

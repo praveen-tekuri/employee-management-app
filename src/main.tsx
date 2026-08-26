@@ -4,9 +4,12 @@ import App from './app/App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import EmployeeProvider from './context/EmployeeContext.tsx'
 import AuthProvider from './context/AuthContext.tsx'
+import { store } from './app/store.ts'
+import { Provider } from 'react-redux'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <Provider store = {store}>
       <BrowserRouter>
         <EmployeeProvider>
           <AuthProvider>
@@ -14,5 +17,6 @@ createRoot(document.getElementById('root')!).render(
           </AuthProvider>
         </EmployeeProvider>
       </BrowserRouter>
+      </Provider>
   </StrictMode>,
 )

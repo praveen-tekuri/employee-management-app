@@ -15,6 +15,10 @@ export interface ProductTypes{
     attributes: ProductTypeAttributes;
 }
 
-export interface ProductApiResponse{
+export interface ProductListApiResponse{
     data: ProductTypes[];
+}
+
+export interface ProductApiResponse{
+    data: ProductTypes
 }

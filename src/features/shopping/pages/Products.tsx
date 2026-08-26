@@ -1,9 +1,10 @@
 
 import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from 'react';
-import useFetch from '../../../hooks/useFetch'
-import type { ProductApiResponse, ProductTypes } from '../types/shopping.types';
+import type { ProductTypes } from '../types/shopping.types';
 import Product from '../../../components/shared/Product';
 import productFilters from '../../../utils/productFilters';
+import { useGetProductsQuery } from '../../../services/productsApi';
+import getErrorMessage from '../../../utils/getErrorMessage';
 
 export interface FormFieldTypes{
     search: string;
@@ -17,13 +18,10 @@ export interface FormFieldTypes{
 const formFields:FormFieldTypes = { search: "", category: "all", company: "all", sortBy: "a-z", price: 0, shipping: false}
 
 const Products = () => {
-  const {loading, data:products, error, fetchData} = useFetch<ProductApiResponse>();
   const [formData, setFormData] = useState(formFields);
   const [filteredProducts, setFilteredProducts] = useState<ProductTypes[]>([]);
 
-  useEffect(() => {
-     fetchData('https://strapi-store-server.onrender.com/api/products');
-  },[fetchData])
+  const {data:products, error, isLoading} = useGetProductsQuery();
 
   useEffect(() => {
     if(products?.data) setFilteredProducts(products.data);
@@ -44,11 +42,10 @@ const Products = () => {
     }))
   }
 
-  const results = useMemo(() => productFilters(products, formData),[formData, products]);
+  const results = useMemo(() => productFilters(products ?? null, formData),[formData, products]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>)=> {
     event.preventDefault();
-    console.log("form submitted");
     setFilteredProducts(results);
   }
 
@@ -57,8 +54,8 @@ const Products = () => {
     setFilteredProducts(products?.data || []);
   }
 
-  if(loading) return <h3>Loading...</h3>
-  if(error) return <h3 className='text-red-500'>{error}</h3>
+  if(isLoading) return <h3>Loading...</h3>
+  if(error) return <h3 className='text-red-500'>{getErrorMessage(error)}</h3>
   
   return (
     <div>
