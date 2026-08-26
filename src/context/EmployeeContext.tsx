@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, useCallback, useMemo } from "react";
-import type { Employee as EmployeeModel} from "../data/models/employee.types";
+import type { Employee as EmployeeModel} from "../features/dashboard/types/employee.types";
 
 // import employeesMockData from "../data/mock/employees";
 

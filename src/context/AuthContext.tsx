@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import type { Employee } from "../data/models/employee.types";
+import type { Employee } from "../features/dashboard/types/employee.types";
 
 interface AuthContextType{
     user: Employee | null,

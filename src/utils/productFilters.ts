@@ -1,5 +1,5 @@
-import type { FormFieldTypes } from "../components/shopping/Products";
-import type { ProductApiResponse, ProductTypes } from "../data/models/shopping.types";
+import type { FormFieldTypes } from "../features/shopping/pages/Products";
+import type { ProductApiResponse, ProductTypes } from "../features/shopping/types/shopping.types";
 
 const productFilters = (products:ProductApiResponse | null, formData:FormFieldTypes):ProductTypes[] => {
     const results = [...(products?.data || [])].filter((product) => {
