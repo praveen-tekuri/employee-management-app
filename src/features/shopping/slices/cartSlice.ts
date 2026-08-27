@@ -2,7 +2,7 @@ import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 
 import type { ProductTypes } from "../types/shopping.types";
 
-interface CartItemTypes extends ProductTypes{
+export interface CartItemTypes extends ProductTypes{
     quantity: number;
     color: string;
 }

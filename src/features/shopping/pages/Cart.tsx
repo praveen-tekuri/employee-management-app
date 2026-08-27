@@ -4,11 +4,14 @@ import formatCurrency from "../../../utils/currencyFormatter";
 import { clearCart, deleteCartItem, updateCart } from "../slices/cartSlice";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
+import cartTotals from "../../../utils/cartTotals";
 
 export const Cart = () => {
   const {cartItems} = useSelector((state:RootState) => state.cart);
-
   const dispatch = useDispatch();
+  
+  const {subTotal, taxAmount, shippingAmount, orderTotal} = cartTotals(cartItems);
+
   return (
     <div>
         <h1 className="border-b pb-5">Shopping Cart</h1>
@@ -41,7 +44,25 @@ export const Cart = () => {
                 <button onClick={() => dispatch(clearCart())} className="border rounded p-2 mt-3 mx-auto block cursor-pointer">Clear Cart</button>
             </section>
             <section className="w-[30%] product-totals">
-                <h1>Totals</h1>
+                <div className="border rounded p-4">
+                    <div className="flex justify-between">
+                        <p>Subtotal</p>
+                        <p>{formatCurrency(subTotal)}</p>
+                    </div>
+                    <div className="flex justify-between mt-4">
+                        <p>Tax</p>
+                        <p>{formatCurrency(Number(taxAmount.toFixed(2)))}</p>
+                    </div>
+                    <div className="flex justify-between mt-4">
+                        <p>Shipping</p>
+                        <p>{formatCurrency(shippingAmount)}</p>
+                    </div>
+                    <div className="flex justify-between mt-4">
+                        <h3 className="font-semibold">Order Total</h3>
+                        <h3 className="font-semibold">{formatCurrency(Number(orderTotal.toFixed(2)))}</h3>
+                    </div>
+                </div>
+                <button className="mt-5 border rounded p-2 w-full cursor-pointer">Proceed to Checkout</button>
             </section>
         </div>
         ): <div className="text-center">
