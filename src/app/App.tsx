@@ -20,6 +20,7 @@ import TodoContainer from '../features/todos/pages/TodoContainer'
 import Shopping from '../features/shopping/pages/Shopping'
 import Products from '../features/shopping/pages/Products'
 import { ProductDetails } from '../components/shared/ProductDetails'
+import Cart from '../features/shopping/pages/Cart'
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                   <Route path='shopping' element={<Shopping/>}/>
                   <Route path='products' element={<Products/>}/>
                   <Route path='products/:id' element={<ProductDetails/>}/>
+                  <Route path='cart' element={<Cart/>}/>
               </Route>
               <Route element ={<ProtectedRoute allowedRoutes={["Employee"]} />}>
                   <Route path='employee/dashboard' element={<EmployeeDashboard/>}>

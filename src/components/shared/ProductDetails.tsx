@@ -1,36 +1,19 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import type { ProductTypes } from '../../features/shopping/types/shopping.types';
 import formatCurrency from '../../utils/currencyFormatter';
 import { useGetProductByIdQuery } from '../../services/productsApi';
 import getErrorMessage from '../../utils/getErrorMessage';
-
-interface ProductDetailsTypes extends ProductTypes{
-    quantity: number;
-    color: string;
-}
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../app/store';
+import { addToCart } from '../../features/shopping/slices/cartSlice';
 
 export const ProductDetails = () => {
-    const [cartItems, setCartItems] = useState<ProductDetailsTypes[]>([]);
     const [quantity, setQuantity] = useState(1);
     const [color, setColor] = useState("");
     const {id} = useParams<{id: string}>();
+    const dispatch = useDispatch<AppDispatch>();
    
     const {isLoading, data:product, error} = useGetProductByIdQuery(id!, {skip: !id});
-
-    console.log(product);
-    
-    const handleAddToCartItem = (product:ProductTypes) => {
-        setCartItems((prev) => {
-            const isProductExist = prev.find((item) => item.id === product.id);
-            if(!isProductExist){
-                return [...prev, {...product, quantity, color}]
-            }
-            return prev.map((el) => el.id === product.id ? {...el, color, quantity: el.quantity + 1}: el);
-        });
-    }
-    console.log(cartItems);
-
 
    if(isLoading) return <h3>Loading...</h3>
    if(error) return <p>{getErrorMessage(error)}</p>
@@ -55,7 +38,12 @@ export const ProductDetails = () => {
                     <span className='mx-4'>{quantity}</span>
                     <button onClick={() => setQuantity((prev) => prev + 1)} className='border cursor-pointer rounded px-4 py-2'>+</button>
                 </div>
-                <button onClick={() => handleAddToCartItem(product.data)} className='mt-3 border rounded py-2 px-5 cursor-pointer'>Add to Cart</button>
+                <button onClick={() => dispatch(addToCart({
+                    id: product.data.id,
+                    attributes: product.data.attributes,
+                    quantity,
+                    color
+                }))} className='mt-3 border rounded py-2 px-5 cursor-pointer'>Add to Cart</button>
             </div>
         </>
         )}

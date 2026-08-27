@@ -2,11 +2,15 @@ import { Link, useLocation } from 'react-router-dom'
 import { useGlobalEmployee } from '../../context/EmployeeContext'
 import { useEffect } from 'react';
 import { useGlobalAuthContext } from '../../context/AuthContext';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../app/store';
 
 const Navbar = () => {
   const {handleClearUpdateId} = useGlobalEmployee();
   const location = useLocation();
   const {handleLogout, user} = useGlobalAuthContext();
+  const {cartItems} = useSelector((state: RootState) => state.cart);
+  console.log(cartItems);
   
   // Clear Update Employee Data on Unmount or when navigating away from edit-employee route
   useEffect(() => {
@@ -34,6 +38,7 @@ const Navbar = () => {
             {user ? (
                 <>
                     <li><Link to="/shopping">Shopping</Link></li>
+                    <li><Link to="/cart">Cart: {cartItems?.length}</Link></li>
                     <button onClick={handleLogout} className='cursor-pointer'> {user.role}: Logout</button>
                 </>
             ): <li><Link to="/login">Login</Link></li>}
