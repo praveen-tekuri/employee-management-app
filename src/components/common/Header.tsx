@@ -10,7 +10,6 @@ const Navbar = () => {
   const location = useLocation();
   const {handleLogout, user} = useGlobalAuthContext();
   const {cartItems} = useSelector((state: RootState) => state.cart);
-  console.log(cartItems);
   
   // Clear Update Employee Data on Unmount or when navigating away from edit-employee route
   useEffect(() => {
@@ -38,7 +37,7 @@ const Navbar = () => {
             {user ? (
                 <>
                     <li><Link to="/shopping">Shopping</Link></li>
-                    <li><Link to="/cart">Cart: {cartItems?.length}</Link></li>
+                    <li><Link to="/cart">Cart: ({cartItems?.length})</Link></li>
                     <button onClick={handleLogout} className='cursor-pointer'> {user.role}: Logout</button>
                 </>
             ): <li><Link to="/login">Login</Link></li>}
