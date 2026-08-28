@@ -8,6 +8,7 @@ export interface ProductTypeAttributes{
     shipping:boolean;
     description: string;
     colors: string[];
+    featured?: boolean;
 }
 
 export interface ProductTypes{

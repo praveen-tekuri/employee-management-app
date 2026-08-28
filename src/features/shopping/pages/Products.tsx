@@ -5,6 +5,7 @@ import Product from '../../../components/shared/Product';
 import productFilters from '../../../utils/productFilters';
 import { useGetProductsQuery } from '../../../services/productsApi';
 import getErrorMessage from '../../../utils/getErrorMessage';
+import withFeaturedLabel from '../../../components/hoc/withFeaturedLabel';
 
 export interface FormFieldTypes{
     search: string;
@@ -16,6 +17,8 @@ export interface FormFieldTypes{
 }
 
 const formFields:FormFieldTypes = { search: "", category: "all", company: "all", sortBy: "a-z", price: 0, shipping: false}
+
+const FeaturedProduct = withFeaturedLabel(Product);
 
 const Products = () => {
   const [formData, setFormData] = useState(formFields);
@@ -108,7 +111,7 @@ const Products = () => {
         <div className="products">
             <h3 className='mt-5 border-b-2 pb-5'>{filteredProducts.length} Products</h3>
             <div className="grid grid-cols-4 gap-6 mt-5">
-                {products && filteredProducts.map((product) => <Product key={product.id} {...product}/>)}
+                {products && filteredProducts.map((product) => <FeaturedProduct key={product.id} {...product}/>)}
             </div>
         </div>
     </div>
