@@ -9,7 +9,7 @@ interface EmployeeRowProps{
 }
 
 const EmployeeRow = React.memo(({employee}:EmployeeRowProps) => {
-  console.log("Employee rendered", employee.id);
+  //console.log("Employee rendered", employee.id);
 
   const navigate = useNavigate();
   

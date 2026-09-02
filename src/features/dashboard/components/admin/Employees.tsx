@@ -1,17 +1,30 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import EmployeeRow from '../../../../components/shared/EmployeeRow'
 import { useGlobalEmployee } from '../../../../context/EmployeeContext';
+import axios from 'axios';
 
 const Employees = () => {
+    const [term, setTerm] = useState("");
+    const [sortBy, setSortBy] = useState("");
+    
+    const fetchEmployeesFromDB = async () => {
+      try {
+          const response = await axios.get("http://localhost:3000/employees");
+          console.log("response from DB: ", response.data);
+      } catch (error) {
+          console.error(error);
+      }
+    }
+  
+    useEffect(() => {
+      fetchEmployeesFromDB();
+    },[])
 
-  const [term, setTerm] = useState("");
-  const [sortBy, setSortBy] = useState("");
-
-  const {employees: {employeesData}} = useGlobalEmployee();
-
-  const filteredEmployees = useMemo(() => employeesData.filter((emp) => 
-    [emp.name, emp.gender, emp.role, emp.skills.join(" ")].join(" ").toLowerCase().includes(term.toLowerCase())
-  ),[employeesData, term]);
+    const {employees: {employeesData}} = useGlobalEmployee();
+    
+    const filteredEmployees = useMemo(() => employeesData.filter((emp) => 
+        [emp.name, emp.gender, emp.role, emp.skills.join(" ")].join(" ").toLowerCase().includes(term.toLowerCase())
+    ),[employeesData, term]);
 
   const sortAndFilteredEmployees = useMemo(() => [...filteredEmployees].sort((a, b) => {
     if(sortBy === "name-asc"){
