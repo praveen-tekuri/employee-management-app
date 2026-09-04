@@ -3,7 +3,7 @@ import type { Employee as EmployeeModel } from "../../features/dashboard/types/e
 import { useGlobalEmployee } from "../../context/EmployeeContext"
 import {useNavigate } from "react-router-dom"
 
-type AddEmployeeForm = Omit<EmployeeModel, "id" | "isActive">
+type AddEmployeeForm = Omit<EmployeeModel, "_id" | "isActive">
 
 const formFields:AddEmployeeForm = {
     name: "", 
@@ -41,11 +41,11 @@ const AddEmployee = () => {
   const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(updateEmployeeData){
-        handleUpdateEmployee({...updateEmployeeData, ...formData}, updateEmployeeData.id)
+        handleUpdateEmployee({...updateEmployeeData, ...formData}, updateEmployeeData._id)
         handleClearUpdateId();
     }
     else{
-        handleAddEmployee({...formData, id: Date.now(), isActive: true})
+        handleAddEmployee({...formData, isActive: true})
     }
     setFormData(formFields)
     navigate("/");
@@ -83,26 +83,26 @@ const AddEmployee = () => {
                 <div className="form-control">
                     <label htmlFor="gender">Gender</label>
                     <label htmlFor="male">
-                        <input value="Male" checked={formData.gender === "Male"} onChange={handleChange} type="radio" name="gender" className="border ml-3 p-2 rounded" id="male" />
+                        <input value="male" checked={formData.gender === "male"} onChange={handleChange} type="radio" name="gender" className="border ml-3 p-2 rounded" id="male" />
                         Male
                     </label>
                     <label htmlFor="female">
-                        <input value="Female" checked={formData.gender === "Female"} onChange={handleChange} type="radio" name="gender" className="border ml-3 p-2 rounded" id="female" />
+                        <input value="female" checked={formData.gender === "female"} onChange={handleChange} type="radio" name="gender" className="border ml-3 p-2 rounded" id="female" />
                         Female
                     </label>
                     <label htmlFor="others">
-                        <input value="Others" checked={formData.gender === "Others"} onChange={handleChange} type="radio" name="gender" className="border ml-3 p-2 rounded" id="others" />
+                        <input value="others" checked={formData.gender === "others"} onChange={handleChange} type="radio" name="gender" className="border ml-3 p-2 rounded" id="others" />
                         Others
                     </label>
                 </div>
                 <div className="form-control">
                     <label htmlFor="role">Role</label>
                     <label htmlFor="admin">
-                        <input value="Admin" checked={formData.role === "Admin"} onChange={handleChange} type="radio" name="role" className="border ml-3 p-2 rounded" id="admin" />
+                        <input value="admin" checked={formData.role === "admin"} onChange={handleChange} type="radio" name="role" className="border ml-3 p-2 rounded" id="admin" />
                         Admin
                     </label>
                     <label htmlFor="employee">
-                        <input value="Employee" checked={formData.role === "Employee"} onChange={handleChange} type="radio" name="role" className="border ml-3 p-2 rounded" id="employee" />
+                        <input value="employee" checked={formData.role === "employee"} onChange={handleChange} type="radio" name="role" className="border ml-3 p-2 rounded" id="employee" />
                         Employee
                     </label>
                 </div>

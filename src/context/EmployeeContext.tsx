@@ -7,6 +7,8 @@ const initialState = {
     updateEmployeeData: null,
 }
 
+type AddEmployeeType = Omit<EmployeeModel, "_id">
+
 interface EmployeeUpdateState{
     employee: EmployeeModel;
     id: string | number;
@@ -61,7 +63,7 @@ const employeeReducer = (state:EmployeeReducerState, action:EmployeeAction):Empl
 
 interface EmployeeContextType{
     employees: EmployeeReducerState,
-    handleAddEmployee: (employee: EmployeeModel) => void;
+    handleAddEmployee: (employee: AddEmployeeType) => void;
     handleGetEmployee:(employee: EmployeeModel) => void;
     handleUpdateEmployee: (employee: EmployeeModel, id: string | number) => void;
     handleDeleteEmployee: (id: number | string) => void;
@@ -87,11 +89,18 @@ const EmployeeProvider = ({children}:{children: React.ReactNode}) => {
         loadEmployeesFromDB();
     },[]) 
 
-    const handleAddEmployee = useCallback((employee:EmployeeModel) => {
-        dispatch({
-            type: "ADD",
-            payload: employee
-        })
+    const handleAddEmployee = useCallback(async(employee:AddEmployeeType) => {
+        try {
+            const resp = await axios.post("http://localhost:3000/employees", employee);
+            dispatch({
+                type: "ADD",
+                payload: resp.data.saved
+            })
+            alert("Employee Added successfully");
+        } catch (error) {
+            console.error(error);
+            alert("Failed to save the data");
+        }
     },[]);
 
     const handleGetEmployee = useCallback((employee:EmployeeModel) => {

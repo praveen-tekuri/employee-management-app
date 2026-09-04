@@ -1,5 +1,5 @@
 
-type Gender = "Male" | "Female" | "Others";
+type Gender = "male" | "female" | "others";
 type Role = "admin" | "employee";
 type Department = "IT" | "HR" | "Finance";
 
