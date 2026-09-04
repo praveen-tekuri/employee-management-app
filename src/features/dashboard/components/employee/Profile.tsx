@@ -10,7 +10,7 @@ const Profile = () => {
   const {user} = useGlobalAuthContext();
   const navigate = useNavigate();
   
-  const profileData = useMemo(() => employeeData.find((emp: Employee) => emp.id === user?.id),[employeeData, user?.id]);
+  const profileData = useMemo(() => employeeData.find((emp: Employee) => emp._id === user?._id),[employeeData, user?._id]);
   
   if(!user) return <h1>No User logged In</h1>;
   if(!profileData) return <h1>Profile Not found</h1>;
