@@ -1,6 +1,6 @@
 
 type Gender = "Male" | "Female" | "Others";
-type Role = "Admin" | "Employee";
+type Role = "admin" | "employee";
 type Department = "IT" | "HR" | "Finance";
 
 export interface Employee{

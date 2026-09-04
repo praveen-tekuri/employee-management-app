@@ -4,7 +4,7 @@ import { useGlobalAuthContext } from "../../context/AuthContext";
 // Authentication & Authorization
 
 interface ProtectedRouteProps{
-    allowedRoutes?: ("Admin" | "Employee")[];
+    allowedRoutes?: ("admin" | "employee")[];
 }
 
 const ProtectedRoute = ({allowedRoutes}:ProtectedRouteProps) => {

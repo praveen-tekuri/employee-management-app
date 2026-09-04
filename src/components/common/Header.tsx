@@ -10,7 +10,7 @@ const Navbar = () => {
   const location = useLocation();
   const {handleLogout, user} = useGlobalAuthContext();
   const {cartItems} = useSelector((state: RootState) => state.cart);
-  
+
   // Clear Update Employee Data on Unmount or when navigating away from edit-employee route
   useEffect(() => {
     if(!location.pathname.startsWith("/employee/dashboard/edit-employee")){
@@ -24,12 +24,12 @@ const Navbar = () => {
             <Link to="/">Employee Management</Link>
         </div>
         <ul className='flex gap-6'>
-            {user?.role === "Admin" && (
+            {user?.role === "admin" && (
                 <>
                     <li><Link to="/admin/dashboard">Dashboard</Link></li>
                 </>
             )}
-            {user?.role === "Employee" && (
+            {user?.role === "employee" && (
                 <>
                     <li><Link to="/employee/dashboard">Dashboard</Link></li>  
                 </>

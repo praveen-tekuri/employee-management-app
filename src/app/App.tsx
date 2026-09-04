@@ -33,13 +33,13 @@ function App() {
               <Route path='faq' element={<FaqContainer/>}/>
               <Route path='todo' element={<TodoContainer/>}/>
 
-              <Route element={<ProtectedRoute allowedRoutes={["Employee", "Admin"]}/>}>
+              <Route element={<ProtectedRoute allowedRoutes={["employee", "admin"]}/>}>
                   <Route path='shopping' element={<Shopping/>}/>
                   <Route path='products' element={<Products/>}/>
                   <Route path='products/:id' element={<ProductDetails/>}/>
                   <Route path='cart' element={<Cart/>}/>
               </Route>
-              <Route element ={<ProtectedRoute allowedRoutes={["Employee"]} />}>
+              <Route element ={<ProtectedRoute allowedRoutes={["employee"]} />}>
                   <Route path='employee/dashboard' element={<EmployeeDashboard/>}>
                       <Route index element={<Profile/>}/>
                       <Route path='profile' element={<Profile/>}/>
@@ -51,7 +51,7 @@ function App() {
                   </Route>
               </Route>
               
-              <Route element={<ProtectedRoute allowedRoutes={['Admin']}/>}>
+              <Route element={<ProtectedRoute allowedRoutes={['admin']}/>}>
                   <Route path='admin/dashboard' element={<AdminDashboard/>}>
                       <Route index element={<AddEmployee/>}/>
                       <Route path='add-employee' element={<AddEmployee/>}/>

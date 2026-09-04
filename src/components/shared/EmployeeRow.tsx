@@ -46,7 +46,7 @@ const EmployeeRow = React.memo(({employee}:EmployeeRowProps) => {
         <td className='border p-2'>
             {isActive ? (
                 <>  
-                    <button onClick={() => handleEditEmployee(employee)} className={`${user?.role === "Admin" && "hidden"} border p-2 rounded cursor-pointer mr-2`}>Update</button>
+                    <button onClick={() => handleEditEmployee(employee)} className={`${user?.role === "admin" && "hidden"} border p-2 rounded cursor-pointer mr-2`}>Update</button>
                     <button onClick={() => handleSoftDelete(_id)} className='border p-2 rounded cursor-pointer'>Delete</button>
                 </>
             ) : "Deleted"}

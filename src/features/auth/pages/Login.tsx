@@ -9,9 +9,10 @@ const Login = () => {
   
   const navigate = useNavigate();
 
-  const handleLoginSubmit = (e:FormEvent<HTMLFormElement>) => {
+  const handleLoginSubmit = async(e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(handleLogin(emailId, password)){
+    const isLoggedIn = await handleLogin(emailId, password);
+    if(isLoggedIn){
         alert("Login Successful");
         navigate("/");
     }else{
