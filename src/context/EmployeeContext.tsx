@@ -49,7 +49,7 @@ const employeeReducer = (state:EmployeeReducerState, action:EmployeeAction):Empl
         case "DELETE": return {
             ...state,
             employeesData: state.employeesData.map((employee) => {
-                if(employee.id === action.payload){
+                if(employee._id === action.payload){
                     return {...employee, isActive: false}
                 }
                 return employee;
@@ -108,11 +108,17 @@ const EmployeeProvider = ({children}:{children: React.ReactNode}) => {
         })
     },[]) 
 
-    const handleDeleteEmployee = useCallback((id: string | number) => {
-        dispatch({
-            type: "DELETE",
-            payload: id
-        })
+    const handleDeleteEmployee = useCallback(async(id: string | number) => {
+        try{
+            await axios.patch(`http://localhost:3000/employees/${id}/inactivate`);
+            dispatch({
+                type: "DELETE",
+                payload: id
+            });
+        }catch(error){
+            console.error("Failed to delete employee", error);
+            alert("Error Deleting employee. please try again");
+        }
     },[])
 
     const handleClearUpdateId = useCallback(() => {
