@@ -44,7 +44,7 @@ const employeeReducer = (state:EmployeeReducerState, action:EmployeeAction):Empl
         case "UPDATE": return {
             ...state,
             employeesData: state.employeesData.map((employee) => 
-                employee.id === action.payload.id ? action.payload.employee: employee),
+                employee._id === action.payload.id ? action.payload.employee: employee),
             updateEmployeeData: null
         }
         case "CLEAR_UPDATE_ID": return state.updateEmployeeData === null ? state : {...state, updateEmployeeData: null}
@@ -80,7 +80,6 @@ const EmployeeProvider = ({children}:{children: React.ReactNode}) => {
         async function loadEmployeesFromDB(){
             try {
                 const resp = await axios.get("http://localhost:3000/employees");
-                console.log(resp.data);
                 dispatch({type: "INIT", payload: resp.data});
             } catch (error) {
                 console.error("Failed to fetch employees", error);
@@ -110,19 +109,26 @@ const EmployeeProvider = ({children}:{children: React.ReactNode}) => {
         })
     },[]);
 
-    const handleUpdateEmployee = useCallback((employee: EmployeeModel, id: string | number) => {
-        dispatch({
-            type: "UPDATE",
-            payload: {employee, id}
-        })
+    const handleUpdateEmployee = useCallback(async(employee: EmployeeModel, id: string | number) => {
+        try {
+            const resp = await axios.patch(`http://localhost:3000/employees/${id}`, employee);
+            dispatch({
+                type: "UPDATE",
+                payload: {employee: resp.data.employee, id: resp.data.employee._id}
+            })
+            alert("Employee updated");
+        } catch (error) {
+            console.error(error)
+            alert("Failed to update the employee");
+        }
     },[]) 
 
     const handleDeleteEmployee = useCallback(async(id: string | number) => {
         try{
-            await axios.patch(`http://localhost:3000/employees/${id}/inactivate`);
+            const resp = await axios.patch(`http://localhost:3000/employees/${id}/inactivate`);
             dispatch({
                 type: "DELETE",
-                payload: id
+                payload: resp.data.employee._id
             });
         }catch(error){
             console.error("Failed to delete employee", error);
