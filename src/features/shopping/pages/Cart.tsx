@@ -5,6 +5,7 @@ import { clearCart, deleteCartItem, updateCart } from "../slices/cartSlice";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import cartTotals from "../../../utils/cartTotals";
+import axios from "axios";
 
 export const Cart = () => {
   const {cartItems} = useSelector((state:RootState) => state.cart);
@@ -34,9 +35,17 @@ export const Cart = () => {
                         </div>
                         <div className="price">
                             <h3 className="font-semibold">Price: </h3>
-                            <p className="mt-2">{formatCurrency(product.attributes.price * product.quantity)}</p>
+                            <p className="mt-2">{formatCurrency(Number(product.attributes.price) * product.quantity)}</p>
                         </div>
-                        <button onClick={() => dispatch(deleteCartItem(product.id))} className="cursor-pointer">
+                        <button onClick={async() => {
+                            try {
+                                await axios.delete(`http://localhost:3000/shopping/delete-product/${product._id}`);
+                                dispatch(deleteCartItem(product._id))
+                            } catch (error) {
+                                console.log(error)
+                                alert("Product has been deleted")
+                            }
+                        }} className="cursor-pointer">
                             <MdDelete className="text-4xl"/>
                         </button>
                     </article>

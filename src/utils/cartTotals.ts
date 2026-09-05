@@ -11,7 +11,7 @@ const cartTotals = (cartItems:CartItemTypes[]):CartTotals => {
   const taxRate = 0.18; // 18%
   const shippingRate = 0.02; // 2%
   const totals = cartItems.reduce((acc, product) => {
-      acc.subTotal += product.attributes.price * product.quantity;
+      acc.subTotal += Number(product.attributes.price) * product.quantity;
       return acc;
   },{
       subTotal: 0,

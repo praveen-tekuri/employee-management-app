@@ -6,12 +6,15 @@ import getErrorMessage from '../../utils/getErrorMessage';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../app/store';
 import { addToCart } from '../../features/shopping/slices/cartSlice';
+import axios from 'axios';
+import { useGlobalAuthContext } from '../../context/AuthContext';
 
 export const ProductDetails = () => {
     const [quantity, setQuantity] = useState(1);
     const [color, setColor] = useState("");
     const {id} = useParams<{id: string}>();
     const dispatch = useDispatch<AppDispatch>();
+    const {user} = useGlobalAuthContext();
    
     const {isLoading, data:product, error} = useGetProductByIdQuery(id!, {skip: !id});
 
@@ -38,12 +41,22 @@ export const ProductDetails = () => {
                     <span className='mx-4'>{quantity}</span>
                     <button onClick={() => setQuantity((prev) => prev + 1)} className='border cursor-pointer rounded px-4 py-2'>+</button>
                 </div>
-                <button onClick={() => dispatch(addToCart({
-                    id: product.data.id,
-                    attributes: product.data.attributes,
-                    quantity,
-                    color
-                }))} className='mt-3 border rounded py-2 px-5 cursor-pointer'>Add to Cart</button>
+                <button onClick={ async() => {
+                    try {
+                        const resp = await axios.post("http://localhost:3000/shopping/add-product", { 
+                            employeeId: user?._id,
+                            id: product.data.id,
+                            attributes: product.data.attributes,
+                            quantity,
+                            color
+                        })
+                        console.log(resp.data.product);
+                        dispatch(addToCart(resp.data.product));
+                    } catch (error) {
+                        console.error(error);
+                        alert("Failed to save the data")
+                    }
+                }} className='mt-3 border rounded py-2 px-5 cursor-pointer'>Add to Cart</button>
             </div>
         </>
         )}

@@ -1,8 +1,15 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 
-import type { ProductTypes } from "../types/shopping.types";
-
-export interface CartItemTypes extends ProductTypes{
+export interface CartItemTypes{
+    _id: string,
+    employeeId?: number | string;
+    id: number;
+    attributes: {
+        image: string;
+        title: string;
+        company: string;
+        price: string;
+    };
     quantity: number;
     color: string;
 }
@@ -44,10 +51,10 @@ const cartSlice = createSlice({
             }
             // action.payload.type === "DEC" && updateProduct.quantity > 1
         },
-        deleteCartItem: (state, action:PayloadAction<number>) => {
+        deleteCartItem: (state, action:PayloadAction<string>) => {
             // state.cartItems = state.cartItems.filter((product) => product.id !== action.payload);
             
-            const productIndex = state.cartItems.findIndex((product) => product.id === action.payload);
+            const productIndex = state.cartItems.findIndex((product) => product._id === action.payload);
             if(productIndex !== -1){
                 state.cartItems.splice(productIndex, 1);
             }
